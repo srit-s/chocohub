@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Chocolates | ChocoHub</title>
+
+<style>
+:root{
+  --bg:#3b2923;
+  --card:#594137;
+  --header:#f8eee3;
+  --dark:#2b1c17;
+  --gold:#e5b779;
+  --text:#fff4e9;
+  --muted:#ead5c3;
+  --border:#745544;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+
+header{
+  padding:19px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:var(--header);
+  color:var(--dark);
+}
+
+.logo{font:bold 27px Georgia}
+.logo span{color:#b77c43}
+
+nav{display:flex;gap:25px;font-size:14px}
+nav a:hover{color:#b77c43}
+
+.cart,.primary,.checkout{
+  background:var(--gold);
+  color:var(--dark);
+  padding:12px 18px;
+  border-radius:6px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.cart:hover,.primary:hover,.checkout:hover{
+  background:#f5d5a6;
+  transform:translateY(-1px);
+}
+
+.hero{
+  padding:48px 7%;
+  background:#51382d;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.eyebrow{
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--gold);
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+h1{
+  font:bold clamp(36px,5vw,54px) Georgia;
+  margin:15px 0;
+  line-height:1.15;
+}
+
+.hero p{
+  color:#ead7c7;
+  line-height:1.8;
+  max-width:480px;
+}
+
+.hero-art{
+  font-size:95px;
+  filter:drop-shadow(0 10px 10px #21130f55);
+  padding:15px;
+}
+
+main{padding:42px 7% 65px}
+
+.toolbar{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin:24px 0;
+}
+
+input,select{
+  padding:13px 14px;
+  border:1px solid #8b6a53;
+  background:var(--card);
+  color:var(--text);
+  border-radius:6px;
+  outline:none;
+}
+
+input::placeholder{color:#dfc9b8}
+
+input:focus,select:focus{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
+}
+
+#search{flex:1;min-width:180px}
+
+.filters{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.filter{
+  background:#684b3b;
+  color:var(--text);
+  padding:10px 17px;
+  border-radius:30px;
+  font-size:13px;
+  transition:.2s;
+}
+
+.filter.active,.filter:hover{
+  background:var(--gold);
+  color:var(--dark);
+}
+
+.result{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:17px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:23px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:11px;
+  overflow:hidden;
+  transition:transform .25s,box-shadow .25s;
+  box-shadow:0 6px 20px #1c100b20;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 14px 30px #160d0a45;
+}
+
+.photo{
+  position:relative;
+  overflow:hidden;
+  background:#e9d5c0;
+}
+
+.photo img{
+  width:100%;
+  height:235px;
+  object-fit:cover;
+  display:block;
+  transition:transform .35s;
+}
+
+.card:hover .photo img{transform:scale(1.045)}
+
+.tag{
+  position:absolute;
+  top:13px;
+  left:13px;
+  background:var(--header);
+  color:var(--dark);
+  padding:7px 10px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.quick{
+  position:absolute;
+  bottom:12px;
+  left:12px;
+  right:12px;
+  padding:11px;
+  background:#fffaf4ed;
+  color:var(--dark);
+  border-radius:5px;
+  opacity:0;
+  transition:.2s;
+}
+
+.card:hover .quick,.quick:focus{opacity:1}
+
+.info{padding:18px}
+
+.info h3{
+  font:22px Georgia;
+  color:var(--text);
+}
+
+.desc{
+  font-size:13px;
+  line-height:1.7;
+  color:var(--muted);
+  margin:10px 0 16px;
+}
+
+.bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.price{
+  font-weight:bold;
+  font-size:17px;
+  color:#f4d3a4;
+}
+
+.add{
+  width:39px;
+  height:39px;
+  border-radius:50%;
+  background:var(--gold);
+  color:var(--dark);
+  font-size:24px;
+  transition:.2s;
+}
+
+.add:hover{
+  background:#f5d5a6;
+  transform:scale(1.08);
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  padding:50px 10px;
+  color:var(--muted);
+  line-height:2;
+}
+
+footer{
+  padding:30px 7%;
+  background:#241713;
+  color:var(--text);
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+footer p{
+  font-size:13px;
+  color:#dfc9b8;
+}
+
+/* Shopping cart */
+#cartPanel{
+  display:none;
+  position:fixed;
+  z-index:8;
+  right:0;
+  top:0;
+  height:100%;
+  width:min(400px,100%);
+  background:#f8eee3;
+  color:var(--dark);
+  padding:24px;
+  box-shadow:0 0 0 100vmax #0008;
+  overflow:auto;
+}
+
+.carthead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.carthead h2{font:25px Georgia}
+
+.close{
+  background:none;
+  color:var(--dark);
+  font-size:28px;
+}
+
+.item{
+  padding:15px 0;
+  border-bottom:1px solid #dfc9b8;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+}
+
+.item button{
+  padding:6px 9px;
+  margin:3px;
+  border-radius:5px;
+  background:#e6d4c1;
+  color:var(--dark);
+}
+
+.total{
+  margin:23px 0;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.checkout{width:100%;padding:14px}
+
+/* Product quick-view popup */
+#modal{
+  display:none;
+  position:fixed;
+  z-index:10;
+  inset:0;
+  background:#160d0acc;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modalbox{
+  position:relative;
+  background:#594137;
+  color:var(--text);
+  padding:24px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  width:min(440px,100%);
+  max-height:90vh;
+  overflow:auto;
+}
+
+.modalbox img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  border-radius:7px;
+}
+
+.modalbox h2{
+  font:28px Georgia;
+  margin:17px 0 10px;
+}
+
+.modalbox p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+  margin-bottom:15px;
+}
+
+.modalclose{
+  position:absolute;
+  right:30px;
+  top:30px;
+  background:var(--header);
+  color:var(--dark);
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:23px;
+}
+
+#message{
+  display:none;
+  position:fixed;
+  z-index:12;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#f8eee3;
+  color:var(--dark);
+  padding:14px 20px;
+  border-radius:8px;
+  box-shadow:0 5px 20px #0003;
+  max-width:90%;
+  text-align:center;
+}
+
+@media(max-width:760px){
+  header{padding:18px 5%;flex-wrap:wrap}
+  nav{
+    order:3;
+    width:100%;
+    justify-content:center;
+    gap:20px;
+  }
+  .hero{padding:35px 5%}
+  .hero-art{font-size:65px}
+  main{padding:32px 5% 45px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .photo img{height:190px}
+  .info{padding:13px}
+  .info h3{font-size:19px}
+  .quick{opacity:1;font-size:12px}
+  footer{padding:25px 5%}
+}
+
+@media(max-width:460px){
+  .hero-art{font-size:48px}
+  .hero{gap:8px}
+  .grid{grid-template-columns:1fr}
+  .photo img{height:250px}
+  .toolbar select{flex:1;min-width:120px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">🍫 Choco<span>Hub</span></a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Shop</a>
+    <a href="index.html#story">Our Story</a>
+  </nav>
+
+  <button class="cart" onclick="openCart()">
+    Bag · <span id="count">0</span>
+  </button>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="eyebrow">Find your happy place</span>
+    <h1>Chocolate,<br>your way.</h1>
+    <p>Discover handcrafted chocolates, silky truffles and thoughtful gift boxes made for the moments worth remembering.</p>
+  </div>
+  <div class="hero-art" aria-hidden="true">🍫 ✦</div>
+</section>
+
+<main>
+  <span class="eyebrow">The collection</span>
+  <h2 style="font:36px Georgia;margin-top:12px">Something to savour.</h2>
+
+  <div class="toolbar">
+    <input id="search" type="search"
+      placeholder="Search chocolates..."
+      aria-label="Search products">
+
+    <select id="sort" aria-label="Sort products">
+      <option value="featured">Featured first</option>
+      <option value="low">Price: low to high</option>
+      <option value="high">Price: high to low</option>
+      <option value="name">Name: A–Z</option>
+    </select>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-cat="All">All treats</button>
+    <button class="filter" data-cat="Dark">Dark chocolate</button>
+    <button class="filter" data-cat="Truffles">Truffles</button>
+    <button class="filter" data-cat="Gifts">Gift boxes</button>
+  </div>
+
+  <p class="result" id="result"></p>
+  <div class="grid" id="products"></div>
+
+  <div class="empty" id="empty">
+    <h3>No chocolates found 🍫</h3>
+    <p>Try another search or category.</p>
+    <button class="primary" onclick="resetFilters()" style="margin-top:15px">
+      Show all treats
+    </button>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <a class="logo" href="index.html">🍫 Choco<span>Hub</span></a>
+    <p style="margin-top:9px">A little joy in every bite.</p>
+  </div>
+  <p>© <span id="year"></span> ChocoHub · Crafted with love</p>
+</footer>
+
+<aside id="cartPanel">
+  <div class="carthead">
+    <h2>Your sweet bag 🍫</h2>
+    <button class="close" onclick="closeCart()" aria-label="Close cart">×</button>
+  </div>
+  <div id="items"></div>
+  <div class="total">Total: <span id="total">₹0</span></div>
+  <button class="checkout" onclick="checkout()">Continue to checkout →</button>
+</aside>
+
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modalbox">
+    <button class="modalclose" onclick="closeModal()" aria-label="Close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div id="message" role="status"></div>
+
+<script>
+const products=[
+  {
+    id:1,
+    name:"Dark Decadence",
+    price:249,
+    cat:"Dark",
+    tag:"BESTSELLER",
+    desc:"Deep cocoa, roasted notes and a rich, lingering finish.",
+    img:"photo-1511381939415-e44015466834"
+  },
+  {
+    id:2,
+    name:"Velvet Truffles",
+    price:349,
+    cat:"Truffles",
+    tag:"FAVOURITE",
+    desc:"Silky chocolate centres wrapped in a delicate cocoa shell.",
+    img:"photo-1481391319762-47dff72954d9"
+  },
+  {
+    id:3,
+    name:"The Gift Box",
+    price:599,
+    cat:"Gifts",
+    tag:"GIFT PICK",
+    desc:"A thoughtful selection of handcrafted chocolate delights.",
+    img:"photo-1549465220-1a8b9238cd48"
+  },
+  {
+    id:4,
+    name:"Midnight Bites",
+    price:299,
+    cat:"Dark",
+    tag:"RICH & BOLD",
+    desc:"Little dark chocolate bites for your everyday indulgence.",
+    img:"photo-1548907040-4d42e3e9c4a8"
+  },
+  {
+    id:5,
+    name:"Cocoa Dream",
+    price:399,
+    cat:"Truffles",
+    tag:"SMOOTH & SILKY",
+    desc:"Creamy, melt-in-your-mouth truffles for slow moments.",
+    img:"photo-1606313564200-e75d5e30476c"
+  },
+  {
+    id:6,
+    name:"Celebration Box",
+    price:799,
+    cat:"Gifts",
+    tag:"SPECIAL MOMENTS",
+    desc:"A generous assortment made to surprise someone special.",
+    img:"photo-1606312619070-d48b4c652a52"
+  }
+];
+
+const cart={};
+let category="All";
+
+const money=n=>"₹"+n.toLocaleString("en-IN");
+const photo=id=>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=700&q=85`;
+
+function draw(){
+  const query=document.getElementById("search").value.trim().toLowerCase();
+  const sort=document.getElementById("sort").value;
+
+  let list=products.filter(p=>
+    (category==="All"||p.cat===category) &&
+    (p.name+" "+p.desc+" "+p.cat).toLowerCase().includes(query)
+  );
+
+  if(sort==="low")list.sort((a,b)=>a.price-b.price);
+  if(sort==="high")list.sort((a,b)=>b.price-a.price);
+  if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
+
+  document.getElementById("result").textContent=
+    `Showing ${list.length} of ${products.length} chocolates`;
+
+  document.getElementById("empty").style.display=
+    list.length?"none":"block";
+
+  document.getElementById("products").innerHTML=list.map(p=>`
+    <article class="card">
+      <div class="photo">
+        <img src="${photo(p.img)}" alt="${p.name}" loading="lazy">
+        <span class="tag">${p.tag}</span>
+        <button class="quick" onclick="quickView(${p.id})">
+          Quick view ↗
+        </button>
+      </div>
+
+      <div class="info">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="bottom">
+          <span class="price">${money(p.price)}</span>
+          <button class="add" onclick="add(${p.id})"
+            aria-label="Add ${p.name} to bag">+</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const button=e.target.closest("button[data-cat]");
+  if(!button)return;
+
+  category=button.dataset.cat;
+
+  document.querySelectorAll(".filter").forEach(b=>
+    b.classList.toggle("active",b===button)
+  );
+
+  draw();
+});
+
+document.getElementById("search").addEventListener("input",draw);
+document.getElementById("sort").addEventListener("change",draw);
+
+function resetFilters(){
+  category="All";
+  document.getElementById("search").value="";
+  document.getElementById("sort").value="featured";
+
+  document.querySelectorAll(".filter").forEach(b=>
+    b.classList.toggle("active",b.dataset.cat==="All")
+  );
+
+  draw();
+}
+
+function add(id){
+  cart[id]=(cart[id]||0)+1;
+  renderCart();
+  notify("Added to your sweet bag 🍫");
+}
+
+function change(id,n){
+  cart[id]=(cart[id]||0)+n;
+  if(cart[id]<=0)delete cart[id];
+  renderCart();
+}
+
+function renderCart(){
+  const entries=Object.entries(cart);
+
+  document.getElementById("count").textContent=
+    entries.reduce((sum,[,qty])=>sum+qty,0);
+
+  document.getElementById("total").textContent=money(
+    entries.reduce((sum,[id,qty])=>
+      sum+products.find(p=>p.id==id).price*qty,0)
+  );
+
+  document.getElementById("items").innerHTML=entries.length
+    ?entries.map(([id,qty])=>{
+      const p=products.find(p=>p.id==id);
+      return `
+        <div class="item">
+          <div><b>${p.name}</b><br>${money(p.price)} × ${qty}</div>
+          <div>
+            <button onclick="change(${id},-1)" aria-label="Decrease quantity">−</button>
+            ${qty}
+            <button onclick="change(${id},1)" aria-label="Increase quantity">+</button>
+            <button onclick="change(${id},-${qty})">Remove</button>
+          </div>
+        </div>
+      `;
+    }).join("")
+    :"<p>Your sweet bag is empty. Find a favourite first!</p>";
+}
+
+function openCart(){
+  document.getElementById("cartPanel").style.display="block";
+}
+
+function closeCart(){
+  document.getElementById("cartPanel").style.display="none";
+}
+
+function quickView(id){
+  const p=products.find(p=>p.id===id);
+
+  document.getElementById("modalContent").innerHTML=`
+    <img src="${photo(p.img)}" alt="${p.name}">
+    <span class="eyebrow">${p.cat} collection</span>
+    <h2>${p.name}</h2>
+    <p>${p.desc}</p>
+    <strong style="font-size:21px;color:#f4d3a4">${money(p.price)}</strong>
+    <br>
+    <button class="primary" style="margin-top:18px"
+      onclick="add(${p.id});closeModal()">
+      Add to bag +
+    </button>
+  `;
+
+  document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+function notify(text){
+  const message=document.getElementById("message");
+  message.textContent=text;
+  message.style.display="block";
+
+  clearTimeout(window.noticeTimer);
+  window.noticeTimer=setTimeout(()=>{
+    message.style.display="none";
+  },2200);
+}
+
+function checkout(){
+  notify(Object.keys(cart).length
+    ?"Demo checkout: connect a payment provider to accept orders."
+    :"Your sweet bag is empty!");
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    closeModal();
+    closeCart();
+  }
+});
+
+document.getElementById("year").textContent=new Date().getFullYear();
+
+draw();
+renderCart();
+</script>
+
+</body>
+</html>

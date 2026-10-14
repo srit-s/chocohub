@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChocoHub | Crafted to Delight</title>
+<style>
+:root{--bg:#f8f3eb;--white:#fffdf9;--dark:#38231c;--gold:#bd8750;--muted:#806e63}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--dark)}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+header{padding:20px 7%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--white)}
+.logo{font: bold 27px Georgia}
+.logo span{color:var(--gold)}
+nav{display:flex;gap:25px;font-size:14px}
+nav a:hover{color:var(--gold)}
+.cart{background:var(--dark);color:white;padding:12px 18px;border-radius:30px}
+.hero{padding:55px 7%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;min-height:500px}
+.eyebrow{font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:bold}
+h1{font: bold clamp(42px,5.5vw,68px)/1.08 Georgia;margin:20px 0}
+h1 em{color:var(--gold);font-weight:normal}
+.hero p{color:var(--muted);line-height:1.8;max-width:440px}
+.btn{display:inline-block;background:var(--dark);color:white;padding:14px 22px;border-radius:5px;margin-top:24px;transition:.2s}
+.btn:hover{background:var(--gold);color:var(--dark);transform:translateY(-2px)}
+.visual{position:relative;min-height:365px;border-radius:48% 48% 12px 12px;overflow:hidden;background:#e8d7c3}
+.visual img{width:100%;height:410px;object-fit:cover;display:block}
+.float-card{position:absolute;right:14px;bottom:18px;background:var(--white);padding:16px 20px;border-radius:8px;box-shadow:0 8px 25px #301b1518}
+.float-card strong{display:block;font:20px Georgia;margin:6px 0}
+.float-card small{color:var(--muted)}
+.stamp{position:absolute;top:20px;right:18px;background:var(--gold);color:white;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;text-align:center;font-size:11px;line-height:1.5;transform:rotate(9deg)}
+.section{padding:55px 7%}
+.heading{text-align:center;margin-bottom:30px}
+h2{font: bold clamp(28px,4vw,38px) Georgia;margin:12px 0}
+.heading p{color:var(--muted);line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.card{background:var(--white);border-radius:10px;overflow:hidden;transition:.25s;border:1px solid #eee3d7}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 28px #38231c12}
+.card img{width:100%;height:225px;object-fit:cover;display:block}
+.info{padding:18px}
+.info h3{font:22px Georgia}
+.info p{font-size:13px;color:var(--muted);line-height:1.6;margin:9px 0 16px}
+.bottom{display:flex;justify-content:space-between;align-items:center}
+.price{font-weight:bold}
+.add{width:38px;height:38px;border-radius:50%;background:var(--dark);color:white;font-size:23px}
+.add:hover{background:var(--gold);color:var(--dark)}
+.banner{margin:0 7% 55px;background:#eadbca;border-radius:12px;padding:35px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.banner p{color:var(--muted);line-height:1.7;margin-top:8px}
+.banner .btn{margin-top:0;white-space:nowrap}
+footer{background:var(--dark);color:white;padding:30px 7%;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer p{color:#d7c3b6;font-size:13px}
+#cartPanel{display:none;position:fixed;z-index:5;right:0;top:0;height:100%;width:min(390px,100%);background:var(--white);padding:24px;box-shadow:0 0 0 100vmax #0006;overflow:auto}
+.carthead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.carthead h2{font-size:24px}
+.close{background:none;font-size:28px}
+.item{padding:15px 0;border-bottom:1px solid #eee0d2;display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.item button{padding:5px 9px;margin:4px;background:#eee3d7;border-radius:5px}
+.total{margin:22px 0;font-size:20px;font-weight:bold}
+.checkout{width:100%;padding:14px;background:var(--dark);color:white;border-radius:5px}
+#message{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:13px 20px;border-radius:8px;z-index:10}
+@media(max-width:700px){
+ header{padding:18px 5%;flex-wrap:wrap}
+ nav{order:3;width:100%;justify-content:center;gap:18px}
+ .hero{grid-template-columns:1fr;padding:40px 5%;gap:25px}
+ .visual img{height:330px}
+ .section{padding:45px 5%}
+ .grid{grid-template-columns:1fr}
+ .banner{margin:0 5% 40px;align-items:flex-start;flex-direction:column}
+ footer{padding:28px 5%}
+}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">🍫 Choco<span>Hub</span></a>
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Shop</a>
+<a href="#story">Our Story</a>
+</nav>
+<button class="cart" onclick="openCart()">Bag · <span id="count">0</span></button>
+</header>
+
+<main>
+<section class="hero">
+<div>
+<span class="eyebrow">Small batches · Big happiness</span>
+<h1>Make life a little <em>sweeter.</em></h1>
+<p>Discover handcrafted chocolates, silky truffles and thoughtful gift boxes made for the moments worth remembering.</p>
+<a class="btn" href="products.html">Explore chocolates ↗</a>
+</div>
+<div class="visual">
+<img src="https://images.unsplash.com/photo-1548907040-4d42e3e9c4a8?auto=format&fit=crop&w=1000&q=85" alt="Artisan chocolate collection">
+<div class="stamp">MADE WITH<br>LOVE ♥</div>
+<div class="float-card"><small>THE CUSTOMER FAVOURITE</small><strong>Velvet Truffles</strong><span>From ₹349 · 4.9/5 ★</span></div>
+</div>
+</section>
+
+<section class="section">
+<div class="heading">
+<span class="eyebrow">A little something for you</span>
+<h2>Meet your new favourites</h2>
+<p>Good chocolate. Beautiful moments. No special occasion needed.</p>
+</div>
+<div class="grid" id="products"></div>
+</section>
+
+<section class="banner" id="story">
+<div><span class="eyebrow">The ChocoHub touch</span><h2>Thoughtfully made, joyfully shared.</h2>
+<p>Quality ingredients, small-batch care and a little extra magic in every box.</p></div>
+<a class="btn" href="products.html">Find your favourite ↗</a>
+</section>
+</main>
+
+<footer>
+<div><a class="logo" href="index.html">🍫 Choco<span>Hub</span></a><p style="margin-top:9px">Handmade happiness, one bite at a time.</p></div>
+<p>© <span id="year"></span> ChocoHub · Made for sweet moments</p>
+</footer>
+
+<aside id="cartPanel">
+<div class="carthead"><h2>Your sweet bag 🍫</h2><button class="close" onclick="closeCart()">×</button></div>
+<div id="items"></div><div class="total">Total: <span id="total">₹0</span></div>
+<button class="checkout" onclick="checkout()">Continue to checkout →</button>
+</aside>
+<div id="message" role="status"></div>
+
+<script>
+const products=[
+{id:1,name:"Dark Decadence",price:249,desc:"Deep cocoa, a bold bite and a smooth finish.",img:"photo-1511381939415-e44015466834"},
+{id:2,name:"Velvet Truffles",price:349,desc:"Silky, delicate chocolate for slow moments.",img:"photo-1481391319762-47dff72954d9"},
+{id:3,name:"The Gift Box",price:599,desc:"A little collection of happiness to share.",img:"photo-1549465220-1a8b9238cd48"}
+];
+const cart={};
+const money=n=>"₹"+n.toLocaleString("en-IN");
+const photo=id=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=700&q=85`;
+document.getElementById("products").innerHTML=products.map(p=>`
+<article class="card"><img src="${photo(p.img)}" alt="${p.name}" loading="lazy">
+<div class="info"><h3>${p.name}</h3><p>${p.desc}</p>
+<div class="bottom"><span class="price">${money(p.price)}</span>
+<button class="add" onclick="add(${p.id})" aria-label="Add ${p.name}">+</button></div></div></article>`).join("");
+function add(id){cart[id]=(cart[id]||0)+1;render();notify("Added to your sweet bag 🍫")}
+function change(id,n){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];render()}
+function render(){
+const entries=Object.entries(cart);
+document.getElementById("count").textContent=entries.reduce((s,[,q])=>s+q,0);
+document.getElementById("total").textContent=money(entries.reduce((s,[id,q])=>s+products.find(p=>p.id==id).price*q,0));
+document.getElementById("items").innerHTML=entries.length?entries.map(([id,q])=>{const p=products.find(p=>p.id==id);return `<div class="item"><div><b>${p.name}</b><br>${money(p.price)} × ${q}</div><div><button onclick="change(${id},-1)">−</button>${q}<button onclick="change(${id},1)">+</button><button onclick="change(${id},-${q})">Remove</button></div></div>`}).join(""):"<p>Your bag is empty. Add a little happiness!</p>";
+}
+function openCart(){document.getElementById("cartPanel").style.display="block"}
+function closeCart(){document.getElementById("cartPanel").style.display="none"}
+function notify(t){const m=document.getElementById("message");m.textContent=t;m.style.display="block";clearTimeout(window.noticeTimer);window.noticeTimer=setTimeout(()=>m.style.display="none",2200)}
+function checkout(){notify(Object.keys(cart).length?"Demo checkout: connect a payment provider to accept orders.":"Your bag is empty!")}
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
